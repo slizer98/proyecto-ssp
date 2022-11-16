@@ -1,12 +1,21 @@
 import express from 'express';
 import open from 'open';
-import usuario from './routes/usuarioRouter.js';
+import usuarioRoutes from './routes/usuarioRouter.js';
+import db from './config/db.js'; 
 
 const app = express();
 
+// conectar a la base de datos
+try {
+    await db.authenticate();
+    console.log('Base de datos conectada');
+} catch (error) {
+    console.log(error);
+}
+
 app.use(express.json());
 app.use( express.urlencoded({extended: true}))
-app.use('/', usuario);
+app.use('/', usuarioRoutes);
 // ruta para rutas que no existen
 app.use((req, res) => {
     res.status(404).send('404 - Not Found');
