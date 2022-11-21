@@ -1,13 +1,16 @@
 import express from 'express';
-import open from 'open';
+import cors from 'cors';
 import usuarioRoutes from './routes/usuarioRouter.js';
 import db from './config/db.js'; 
 
 const app = express();
 
+app.use(cors());
+
 // conectar a la base de datos
 try {
     await db.authenticate();
+    db.sync();
     console.log('Base de datos conectada correctamente');
 } catch (error) {
     console.log(error);

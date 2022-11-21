@@ -19,7 +19,7 @@ const Usuario = db.define('usuarios', {
         allowNull: false,
     },
     fechaNacimiento: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     gradoEstudios: {
@@ -39,7 +39,6 @@ const Usuario = db.define('usuarios', {
         allowNull: false,
     },
     token: DataTypes.STRING,
-    confirmado: DataTypes.BOOLEAN,
 
 });
 
