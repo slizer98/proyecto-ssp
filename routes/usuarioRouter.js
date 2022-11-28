@@ -3,7 +3,7 @@ import { formularioLogin, formularioRegistro } from '../controller/usuarioContro
 
 const router = express.Router();
 
-router.get('/login', formularioLogin);
+router.post('/login', formularioLogin);
 router.post('/registro', formularioRegistro);
 
 export default router;

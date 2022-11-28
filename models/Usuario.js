@@ -38,8 +38,19 @@ const Usuario = db.define('usuarios', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    token: DataTypes.STRING,
+    token: DataTypes.STRING, 
+    AIMID: DataTypes.STRING,
+    
+},{
+    hooks: {
+        beforeCreate: async function(usuario){
+            const AIMID = Date.now();
+            usuario.AIMID = AIMID;
 
+
+        }
+    }
 });
+
 
 export default Usuario;
