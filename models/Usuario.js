@@ -2,6 +2,7 @@ import {DataTypes} from 'sequelize';
 import db from '../config/db.js';
 
 const Usuario = db.define('usuarios', {
+    AIMID: DataTypes.STRING,
     nombre: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -39,7 +40,7 @@ const Usuario = db.define('usuarios', {
         allowNull: false,
     },
     token: DataTypes.STRING, 
-    AIMID: DataTypes.STRING,
+    estado: DataTypes.STRING,
     
 },{
     hooks: {
