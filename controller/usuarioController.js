@@ -38,7 +38,7 @@ const formularioRegistro = async(req, res) => {
     // comprobar si el usuario ya existe
     const usuarioExiste = await Usuario.findOne({where: {email: req.body.email}});
     if(usuarioExiste){
-        return res.json({msg: 'El email ya esta registrado'});
+        return res.json({msg: 'El email ya esta registrado'});r
     }
     const usuario = await Usuario.create(req.body);
     res.json(usuario);
