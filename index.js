@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import usuarioRoutes from './routes/usuarioRouter.js';
+import listaDeTareasRouter from './routes/listaDeTareasRouter.js';
 import db from './config/db.js'; 
 
 const app = express();
@@ -18,7 +19,11 @@ try {
 
 app.use(express.json());
 app.use( express.urlencoded({extended: true}))
+
+// rutas disponibles
 app.use('/', usuarioRoutes);
+app.use('/listaTarea', listaDeTareasRouter);
+
 // ruta para rutas que no existen
 app.use((req, res) => {
     res.status(404).send('404 - Not Found');

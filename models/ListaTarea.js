@@ -10,7 +10,11 @@ const ListaTarea = db.define('listaTarea', {
     fecha: {
         type: DataTypes.STRING,
         allowNull: false,
-    }
+    },
+    estado: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
 });
 
 export default ListaTarea;
