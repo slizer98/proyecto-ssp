@@ -19,7 +19,6 @@ Sedes.hasMany(Actividades);
 Miembros.belongsTo(Sedes);
 Actividades.belongsTo(Sedes);
 
-Usuario.hasMany(Mensaje);
 Mensaje.belongsTo(Usuario);
 
 
