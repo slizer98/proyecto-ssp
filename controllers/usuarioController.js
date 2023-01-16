@@ -1,19 +1,29 @@
 import { check, validationResult } from 'express-validator';
+import { generarJWT } from '../helpers/token.js';
 import Usuario from '../models/Usuario.js';
 
 const formularioLogin = async(req, res) => {
+    // validacion de campos
+    await check('AIMID', 'El AIMID es obligatorio').notEmpty().run(req);
+    await check('password', 'El password es obligatorio').notEmpty().run(req);
+    let resultado = validationResult(req);
+    // imprimir errores
+    if(!resultado.isEmpty()){
+        return res.status(400).json({ok: 'errores', errors: resultado.array()});
+    }
     // buscar usuario por ID
     const usuario = await Usuario.findOne({where: {AIMID: req.body.AIMID}});
     // si no existe el usuario
     if(!usuario){
-        return res.json({msg: 'Usuario no existe'});
+        return res.status(400).json({ok: false, msg: 'El usuario no existe'});
     }
     // si el password es incorrecto
     if(usuario.password !== req.body.password){
-        return res.json({msg: 'Password incorrecto'});
+        return res.status(400).json({ok: false, msg: 'El password es incorrecto'});
     }
-    // si el password  e ID es correcto
-    res.json({msg: 'Login correcto'});
+    // auntenticar usuario
+    const token = await generarJWT({AIMID: usuario.AIMID, nombre: usuario.nombre, id: usuario.id});
+    res.json({ok: true, token});
 
 }
 

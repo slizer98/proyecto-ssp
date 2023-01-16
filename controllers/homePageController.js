@@ -1,6 +1,12 @@
 import { check, validationResult } from 'express-validator';
 import { Usuario, Mensaje } from '../models/index.js';
 
+const paginaPrincipal = (req, res) => {
+    res.json({
+        ok: true,
+        msg: 'Pagina principal'
+    });
+}
 
 const enviarMensaje = async (req, res) => {
     const { email, mensaje } = req.body;
@@ -50,4 +56,4 @@ const verMensaje = async(req, res) => {
     res.status(200).json({ ok: true, mensajesUsuario});
 }
 
-export { enviarMensaje, verMensaje }
+export { paginaPrincipal, enviarMensaje, verMensaje }
