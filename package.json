@@ -19,6 +19,7 @@
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.9.0",
     "open": "^8.4.0",
     "sequelize": "^6.25.6"
   },
