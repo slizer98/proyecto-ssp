@@ -21,7 +21,7 @@ const emailRegistro = async(datos) => {
         html: `
             <h3>Hola ${nombre}, comprueba tu cuenta Confirma tu cuenta en AsociacionMecatronica.com</h3>
             <p>Tu cuenta ya esta lista solo debes confirmarla en el siguiente enlace:
-            <a href="${process.env.BACK_URL}/${token}">Confirmar Cuenta </a></p>
+            <a href="${process.env.BACK_URL}:${process.env.PORT ?? 3000}/auth/confirmar/${token}">Confirmar Cuenta </a></p>
             <p> Si no has creado una cuenta en AsociacionMecatronica.com, ignora este correo</p>
         `
       });

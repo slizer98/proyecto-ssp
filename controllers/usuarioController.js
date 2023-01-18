@@ -94,8 +94,27 @@ const confirmarCuenta = async(req, res) => {
     res.redirect('http://127.0.0.1:5500/HTML/cuentaConfirmada.html');
 }
 
+const olvidePassword = async(req, res) => {
+    // buscar usuario por email
+    const usuario = await Usuario.findOne({where: {email: req.body.email}});
+    // si no existe el usuario
+    if(!usuario){
+        return res.status(400).json({ok: false, msg: 'El usuario no existe'});
+    }
+    // generar token
+    const token = await generarJWT({AIMID: usuario.AIMID, nombre: usuario.nombre, id: usuario.id});
+    // enviar email
+    emailOlvidePassword({
+        nombre: usuario.nombre,
+        email: usuario.email,
+        token
+    });
+    res.json({ok: true, msg: 'Email enviado'});
+}
+
 export {
     formularioLogin,
     formularioRegistro,
-    confirmarCuenta
+    confirmarCuenta,
+    olvidePassword
 }
