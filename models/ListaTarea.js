@@ -7,13 +7,17 @@ const ListaTarea = db.define('listaTarea', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    hora: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     fecha: {
         type: DataTypes.STRING,
         allowNull: false,
     },
     estado: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
     },
 });
 

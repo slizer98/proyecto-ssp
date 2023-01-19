@@ -72,6 +72,7 @@ const formularioRegistro = async(req, res) => {
     });
 
     emailRegistro({
+        AIMID: usuario.AIMID,
         nombre: usuario.nombre,
         email: usuario.email,
         token

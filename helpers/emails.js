@@ -10,7 +10,7 @@ const emailRegistro = async(datos) => {
         }
       });
 
-      const { nombre, email, token } = datos;
+      const { nombre, email, token, AIMID } = datos;
 
       // enviar el correo
       await transport.sendMail({
@@ -19,9 +19,10 @@ const emailRegistro = async(datos) => {
         subject: 'Confirma tu cuenta en AsociacionMecatronica.com',
         text: 'Confirma tu cuenta en AsociacionMecatronica.com',
         html: `
-            <h3>Hola ${nombre}, comprueba tu cuenta Confirma tu cuenta en AsociacionMecatronica.com</h3>
+            <h3>Hola ${nombre}, Confirma tu cuenta en AsociacionMecatronica.com</h3>
             <p>Tu cuenta ya esta lista solo debes confirmarla en el siguiente enlace:
             <a href="${process.env.BACK_URL}:${process.env.PORT ?? 3000}/auth/confirmar/${token}">Confirmar Cuenta </a></p>
+            <p>Tu AIMID: ${AIMID}</p>
             <p> Si no has creado una cuenta en AsociacionMecatronica.com, ignora este correo</p>
         `
       });

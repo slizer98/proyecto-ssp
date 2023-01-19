@@ -25,7 +25,7 @@ try {
 
 // rutas disponibles
 app.use('/auth', usuarioRoutes);
-app.use('/listaTarea', listaDeTareasRouter);
+app.use('/tareas', listaDeTareasRouter);
 app.use('/', homePage);
 
 // ruta para rutas que no existen
