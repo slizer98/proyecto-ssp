@@ -5,6 +5,7 @@ import Miembros from './Miembros.js';
 import Actividades from './Actividades.js';
 import Usuario from './Usuario.js';
 import Mensaje from './Mensaje.js';
+import ListaTarea from './ListaTarea.js';
 
 // creamos las relaciones entre los modelos
 // Capitulo tiene muchas Sedes
@@ -18,6 +19,10 @@ Sedes.hasMany(Miembros);
 Sedes.hasMany(Actividades);
 Miembros.belongsTo(Sedes);
 Actividades.belongsTo(Sedes);
+
+// un usuario tiene muchas tareas 
+ListaTarea.belongsTo(Usuario);
+
 
 Mensaje.belongsTo(Usuario);
 

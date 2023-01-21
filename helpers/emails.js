@@ -49,7 +49,7 @@ const emailOlvidePassword = async(datos) => {
         html: `
             <h3>Hola ${nombre}, has solicitado reestablecer tu password en AsociacionMecatronica.com</h3>
             <p>sigue el siguiente enlace para reestablecer tu password:
-            <a href="${process.env.FRONT_URL}:${process.env.PORT ?? 5500}/auth/olvide-password/${token}">Reestablecer Password</a></p>
+            <a href="${process.env.BACK_URL}:${process.env.PORT ?? 3000}/auth/recuperar-password/${token}">Reestablecer Password</a></p>
             <p> Si tu no solicitaste el cambio de password, puedes ignorar este mensaje.</p>
         `
       });

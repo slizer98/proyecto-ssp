@@ -11,8 +11,8 @@ import {
 import { auth } from '../middlewares/auth.js';
 const router = express.Router();
 
-router.get('/', obtenerTareas);
-router.post('/', agregarTarea);
+router.get('/:id', auth, obtenerTareas);
+router.post('/:id', agregarTarea);
 router.put('/:id', modificarTarea);
 router.put('/completar/:id', completarTarea);
 router.delete('/:id', eliminarTarea);

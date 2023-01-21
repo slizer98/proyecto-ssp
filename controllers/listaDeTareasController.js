@@ -5,21 +5,25 @@ import {check, validationResult } from 'express-validator';
 // obtener todas las tareas
 const obtenerTareas = async (req, res) => {
     try {
-        let tareas = [] 
-        tareas = await ListaTarea.findAll();
+        // obtener las tareas de un usuario
+        const { id } = req.params;
+        const tareas = await ListaTarea.findAll({ where: { usuarioId: id } });
+        // si no hay tareas
         if(tareas.length === 0) {
-            return res.status(404).json({ok: false, msg: 'No hay tareas' });
-        } 
+            return res.status(200).json({ok: false, msg: 'No hay tareas' });
+        }
         res.status(200).json({ok: true, tareas });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ msg: 'Error al obtener las tareas', error });
+        console.log(error)
+        res.status(500).json({ok: false, msg: 'Error al obtener las tareas' });
     }
 }
 
 // agregar una tarea
 const agregarTarea = async (req, res) => {
     try {
+        // obtenr al usuario que esta agregando la tarea
+        const { id } = req.params;
         // Validaciones
         await check('nombre', 'El nombre debe tener al menos 10 caracteres').isLength({ min: 10 }).run(req);
         await check('hora', 'La hora no puede estar vacia').notEmpty().run(req);
@@ -28,8 +32,14 @@ const agregarTarea = async (req, res) => {
         if(!errores.isEmpty()) {
             return res.status(400).json({ok: 'errores', errors: errores.array() });
         }
-        const nuevaTarea = await ListaTarea.create(req.body);
-        res.status(200).json({ok: 'ok', nuevaTarea});
+        const nuevaTarea = await ListaTarea.create({
+            nombre: req.body.nombre,
+            hora: req.body.hora,
+            fecha: req.body.fecha,
+            completado: req.body.completado,
+            usuarioId: id
+        })
+        res.status(200).json({ok: true, nuevaTarea });
     } catch (error) {
         console.log(error)
         res.status(500).json({ msg: 'Error al agregar la tarea' });

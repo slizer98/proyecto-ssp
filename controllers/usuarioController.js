@@ -96,26 +96,48 @@ const confirmarCuenta = async(req, res) => {
 }
 
 const olvidePassword = async(req, res) => {
+    // validacion de campos
+    await check('enviar-olvide', 'El email no es valildo').isEmail().run(req);
     // buscar usuario por email
     const usuario = await Usuario.findOne({where: {email: req.body.email}});
     // si no existe el usuario
     if(!usuario){
         return res.status(400).json({ok: false, msg: 'El usuario no existe'});
     }
+
     // generar token
     const token = await generarJWT({AIMID: usuario.AIMID, nombre: usuario.nombre, id: usuario.id});
     // enviar email
+    // guardar token en la base de datos
+    usuario.token = token;
+    await usuario.save();
     emailOlvidePassword({
         nombre: usuario.nombre,
         email: usuario.email,
         token
     });
-    res.json({ok: true, msg: 'Email enviado'});
+    res.json({ok: true, token});
 }
+
+const recuperarPassword = async(req, res) => {
+    // buscar usuario por token
+    const usuario = await Usuario.findOne({where: {token: req.params.token}});
+
+    if(!usuario){
+        return res.status(400).redirect('http://127.0.0.1:5500/HTML/logginProyectista.html');
+    }
+    // enviar a la pantalla de recuperar password
+    usuario.token = null;
+    await usuario.save();
+    res.redirect('http://127.0.0.1:5500/HTML/NewPassword.html')
+}
+
+
 
 export {
     formularioLogin,
     formularioRegistro,
     confirmarCuenta,
-    olvidePassword
+    olvidePassword,
+    recuperarPassword
 }
