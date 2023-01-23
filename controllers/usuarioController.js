@@ -129,7 +129,7 @@ const recuperarPassword = async(req, res) => {
     // enviar a la pantalla de recuperar password
     usuario.token = null;
     await usuario.save();
-    res.redirect('http://127.0.0.1:5500/HTML/NewPassword.html')
+    res.redirect('http://127.0.0.1:5500/HTML/NewPassword.html');
 }
 
 

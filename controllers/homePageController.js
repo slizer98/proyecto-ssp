@@ -9,32 +9,34 @@ const paginaPrincipal = (req, res) => {
 }
 
 const enviarMensaje = async (req, res) => {
-    const { email, mensaje } = req.body;
-    const usuario = await Usuario.findOne({ where: { email } });
-    await check('email', 'El email es obligatorio').not().isEmpty().isEmail().run(req);
-    await check('mensaje', 'El mensaje debe tener al menes 10 caracteres').not().isEmpty().isLength({ min: 10 }).run(req);
+    await check('email', 'Email no valido').isEmail().run(req);
+    await check('mensaje', 'El mensaje debe tener al menes 10 caracteres').isLength({ min: 10 }).run(req);
     
     const errores = validationResult(req);
+
+    if (!errores.isEmpty()) {
+        return res.status(400).json({
+            ok: "errores",
+            errores: errores.array()
+        });
+    }
+    const { email, asunto, mensaje } = req.body;
+    const usuario = await Usuario.findOne({ where: { email } });
 
     // identificar usuario que enviara el mensaje
     const usuarioEnvia = await Usuario.findOne({ where: { id: req.params.id } });
 
-    if (!errores.isEmpty()) {
-        return res.status(400).json({
-            ok: false,
-            errores: errores.array()
-        });
-    }
 
     if (!usuario) {
         return res.status(400).json({
             ok: false,
-            msg: 'El usuario no existe'
+            msg: 'El usuario no esta registrado en la plataforma'
         });
     }
     // crear el mensaje
     const mensajeDb = await Mensaje.create({
         usuarioEnvia: usuarioEnvia.email,
+        asunto,
         mensaje,
         usuarioId: usuario.id
     });
@@ -53,6 +55,13 @@ const verMensaje = async(req, res) => {
             usuarioId: req.params.id
         },
     });
+    if(mensajesUsuario.length === 0){
+        return res.status(200).json({
+            ok: false,
+            msg: 'No hay mensajes para este usuario',
+            mensajesUsuario: []
+        });
+    }
     res.status(200).json({ ok: true, mensajesUsuario});
 }
 

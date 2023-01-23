@@ -5,6 +5,9 @@ const Mensaje = db.define('mensajes', {
     usuarioEnvia: {
         type: DataTypes.STRING,
     },
+    asunto: {
+        type: DataTypes.STRING,
+    },
     mensaje: {
         type: DataTypes.STRING(1000),
         allowNull: false,
