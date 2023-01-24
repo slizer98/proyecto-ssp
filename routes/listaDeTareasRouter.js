@@ -6,12 +6,14 @@ import {
     agregarTarea, 
     modificarTarea, 
     completarTarea,
-    eliminarTarea 
+    eliminarTarea,
+    obtenerTarea
     } from '../controllers/listaDeTareasController.js';
 import { auth } from '../middlewares/auth.js';
 const router = express.Router();
 
 router.get('/:id', auth, obtenerTareas);
+router.get('/obtener-tarea/:idTarea', obtenerTarea)
 router.post('/:id', agregarTarea);
 router.put('/:id', modificarTarea);
 router.put('/completar/:id', completarTarea);

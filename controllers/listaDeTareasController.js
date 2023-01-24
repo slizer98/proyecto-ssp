@@ -19,6 +19,20 @@ const obtenerTareas = async (req, res) => {
     }
 }
 
+const obtenerTarea = async (req, res) => {
+    try {
+        const { idTarea } = req.params;
+        const tarea = await ListaTarea.findOne({ where: { id: idTarea } });
+        if(!tarea) {
+            return res.status(404).json({ok: false, msg: 'La tarea no existe' });
+        }
+        res.status(200).json({ok: true, tarea });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ok: false, msg: 'Error al obtener la tarea' });
+    }
+}
+
 // agregar una tarea
 const agregarTarea = async (req, res) => {
     try {
@@ -53,18 +67,24 @@ const modificarTarea = async (req, res) => {
         // validaciones
         const tarea = await ListaTarea.findOne({ where: { id } });
         if(!tarea) {
-            return res.status(404).json({ msg: 'La tarea no existe' });
+            return res.status(404).json({ok: false,  msg: 'La tarea no existe' });
         }
         await check('nombre', 'El nombre debe tener al menos 10 caracteres').isLength({ min: 10 }).run(req);
+        await check('hora', 'La hora no puede estar vacia').notEmpty().run(req);
         await check('fecha', 'La fecha no puede estar vacia').notEmpty().run(req);
         const errores = validationResult(req);
         if(!errores.isEmpty()) {
-            return res.status(400).json({ errores: errores.array() });
+            return res.status(400).json({ok: 'errores', errores: errores.array() });
         }
-        await ListaTarea.update(req.body, { where: { id } });
-        res.status(200).json({ msg: 'Tarea modificada correctamente' });
-    } catch (error) {
-        res.status(500).json({ msg: 'Error al modificar la tarea' });
+        await ListaTarea.update({
+            nombre: req.body.nombre,
+            hora: req.body.hora,
+            fecha: req.body.fecha,
+        }, { where: { id } });
+        res.status(200).json({ok: true, msg: 'Tarea modificada correctamente' });
+    } catch(error){
+        console.log(error)
+        res.json({ok: false, msg: "error al modificar la tarea"})
     }
 }
 
@@ -105,5 +125,6 @@ export {
     agregarTarea, 
     completarTarea,
     modificarTarea, 
-    eliminarTarea 
+    eliminarTarea,
+    obtenerTarea
 };
