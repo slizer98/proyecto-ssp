@@ -132,12 +132,52 @@ const recuperarPassword = async(req, res) => {
     res.redirect('http://127.0.0.1:5500/HTML/NewPassword.html');
 }
 
+const obtenerUsuario = async(req, res) => {
+// buscar el usuario por el id del token y agregar el scope para eliminar el password
+    const usuario = await Usuario.scope('eliminarPassword').findOne({where: {id: req.params.id}})   
+    res.json({ok: true, usuario});
+}
 
+const editarUsuario = async(req, res) => {
+    // validacion de campos
+    await check('nombre', 'El nombre es obligatorio').notEmpty().run(req);
+    await check('email', 'El email no es valildo').isEmail().run(req);
+    await check('ciudad', 'La ciudad es obligatoria').notEmpty().run(req);
+    await check('fechaNacimiento', 'La fecha de nacimiento es obligatoria').notEmpty().run(req);
+    await check('gradoEstudios', 'El grado de estudios es obligatorio').notEmpty().run(req);
+    await check('suscripcion', 'La suscripcion es obligatoria').notEmpty().run(req);
+    await check('conocimientos', 'Los conocimientos son obligatorios').notEmpty().run(req);
+    await check('intereses', 'Los intereses son obligatorios').notEmpty().run(req);
+    let resultado = validationResult(req);
+    // imprimir errores 
+    if(!resultado.isEmpty()){ 
+        return res.json({ok: 'errores', errors: resultado.array()}); 
+    }
+    // buscar usuario por id
+    const usuario = await Usuario.findOne({where: {id: req.params.id}});
+    // si no existe el usuario
+    if(!usuario){
+        return res.status(400).json({ok: false, msg: 'El usuario no existe'});
+    }
+    // actualizar usuario
+    usuario.nombre = req.body.nombre;
+    usuario.email = req.body.email;
+    usuario.ciudad = req.body.ciudad;
+    usuario.fechaNacimiento = req.body.fechaNacimiento;
+    usuario.gradoEstudios = req.body.gradoEstudios;
+    usuario.suscripcion = req.body.suscripcion;
+    usuario.conocimientos = req.body.conocimientos;
+    usuario.intereses = req.body.intereses;
+    await usuario.save();
+    // enviar a la pantalla de usuario confirmado
+    res.json({ok: true, usuario});
+}
 
 export {
     formularioLogin,
     formularioRegistro,
     confirmarCuenta,
     olvidePassword,
-    recuperarPassword
+    recuperarPassword,
+    obtenerUsuario
 }
