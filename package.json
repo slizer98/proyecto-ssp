@@ -9,7 +9,7 @@
     "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Erick Villafuerte, Axel Hidalgo Ramos",
   "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.6",
