@@ -179,5 +179,6 @@ export {
     confirmarCuenta,
     olvidePassword,
     recuperarPassword,
-    obtenerUsuario
+    obtenerUsuario,
+    editarUsuario
 }
