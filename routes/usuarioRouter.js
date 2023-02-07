@@ -17,6 +17,6 @@ router.get('/confirmar/:token', confirmarCuenta)
 router.post('/olvide-password', olvidePassword);
 router.get('/recuperar-password/:token', recuperarPassword);
 router.get('/obtener-usuario/:id', obtenerUsuario);
-router.put('/actualizar-usuario/:id', editarUsuario);
+router.put('/editar-perfil/:id', editarUsuario);
 
 export default router;
