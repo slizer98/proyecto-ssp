@@ -1,8 +1,4 @@
 import { Capitulos, Sedes, Miembros, Actividades } from '../models/index.js'
-// Los siguientes controladores son para obtener los capitulos
-// Los capitulos tienen muchas sedes
-// Las sedes tienen muchos miembros 
-// Los miembros tienen muchas actividades
 
 // Obtener todos los capitulos
 const obtenerCapitulos = async (req, res) => {

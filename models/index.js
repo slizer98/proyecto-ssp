@@ -6,6 +6,7 @@ import Actividades from './Actividades.js';
 import Usuario from './Usuario.js';
 import Mensaje from './Mensaje.js';
 import ListaTarea from './ListaTarea.js';
+import Proyectos from './Proyectos.js';
 
 // creamos las relaciones entre los modelos
 // Capitulo tiene muchas Sedes
@@ -19,6 +20,7 @@ Sedes.hasMany(Miembros);
 Sedes.hasMany(Actividades);
 Miembros.belongsTo(Sedes);
 Actividades.belongsTo(Sedes);
+ListaTarea.belongsTo(Proyectos);
 
 // un usuario tiene muchas tareas 
 ListaTarea.belongsTo(Usuario);
@@ -26,6 +28,12 @@ ListaTarea.belongsTo(Usuario);
 
 Mensaje.belongsTo(Usuario);
 
-
-// exportamos los modelos
-export {Capitulos, Sedes, Miembros, Actividades, Usuario, Mensaje};
+export {
+    Capitulos, 
+    Sedes, 
+    Miembros, 
+    Actividades, 
+    Usuario, 
+    Mensaje, 
+    Proyectos
+};

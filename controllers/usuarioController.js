@@ -19,7 +19,7 @@ const formularioLogin = async(req, res) => {
         return res.status(400).json({ok: false, msg: 'El usuario no existe'});
     }
     // si el password es incorrecto
-    if(usuario.password !== req.body.password){
+    if(!usuario.verificarPassword(req.body.password)){
         return res.status(400).json({ok: false, msg: 'El password es incorrecto'});
     }
     if(!usuario.confirmado){
@@ -55,7 +55,7 @@ const formularioRegistro = async(req, res) => {
         return res.json({msg: 'El email ya esta registrado'});r
     }
     // enviar email de confirmacion
-    const token = await generarJWT({AIMID: req.body.AIMID, nombre: req.body.nombre, id: req.body.id});
+    const token = await generarJWT({AIMID: req.body.AIMID, nombre: req.body.nombre, id: req.body.id, rol: 'externo'});
     
     const usuario = await Usuario.create({
         AIMID: req.body.AIMID,
@@ -68,7 +68,8 @@ const formularioRegistro = async(req, res) => {
         suscripcion: req.body.suscripcion,
         conocimientos: req.body.conocimientos,
         intereses: req.body.intereses,
-        token
+        token,
+        rol: 'externo'
     });
 
     emailRegistro({

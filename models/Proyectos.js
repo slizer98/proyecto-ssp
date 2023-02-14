@@ -18,7 +18,6 @@ const Proyectos = db.define('proyectos', {
     },
     actividades: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
     responsable: {  
         type: DataTypes.STRING,

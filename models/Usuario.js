@@ -1,4 +1,5 @@
 import {DataTypes} from 'sequelize';
+import bcrypt from 'bcrypt';
 import db from '../config/db.js';
 
 const Usuario = db.define('usuarios', {
@@ -45,15 +46,20 @@ const Usuario = db.define('usuarios', {
         defaultValue: false
     },
     estado: DataTypes.STRING,
+    rol: {
+        type: DataTypes.STRING,
+        defaultValue: 'usuario'
+    }
     
 },{
     hooks: {
         beforeCreate: async function(usuario){
             const AIMID = Date.now();
             usuario.AIMID = AIMID;
-
-
-        }
+            
+            const salt = await bcrypt.genSalt(10);
+            usuario.password = await bcrypt.hash(usuario.password, salt);
+        },
     },
     scopes: {
         eliminarPassword: {
@@ -64,5 +70,9 @@ const Usuario = db.define('usuarios', {
     },
 });
 
+// Metodos personalizados
+Usuario.prototype.verificarPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+}
 
 export default Usuario;
