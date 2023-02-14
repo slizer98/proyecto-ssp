@@ -26,7 +26,7 @@ const formularioLogin = async(req, res) => {
         return res.status(400).json({ok: false, msg: 'El usuario no ha confirmado su cuenta'});
     }
     // auntenticar usuario
-    const token = await generarJWT({AIMID: usuario.AIMID, nombre: usuario.nombre, id: usuario.id});
+    const token = await generarJWT({AIMID: usuario.AIMID, nombre: usuario.nombre, id: usuario.id, rol: usuario.rol});
     res.json({ok: true, token});
 
 }
