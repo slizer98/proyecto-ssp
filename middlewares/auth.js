@@ -28,4 +28,15 @@ const auth = (req, res, next) => {
 
 }
 
-export { auth };
+
+// Roles: proyectista, miembro, externo
+const verificarRol = (req, res, next) => {
+    const rol = req.usuario.rol;
+    if (rol !== 'proyectista') {
+        const error = new Error('No autorizado');
+        error.statusCode = 401;
+        throw error;
+    }
+    next();
+}
+export { auth, verificarRol };

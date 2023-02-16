@@ -13,10 +13,10 @@ import { auth } from '../middlewares/auth.js';
 const router = express.Router();
 
 router.get('/:id', auth, obtenerTareas);
-router.get('/obtener-tarea/:idTarea', obtenerTarea)
-router.post('/:id', agregarTarea);
-router.put('/:id', modificarTarea);
-router.put('/completar/:id', completarTarea);
-router.delete('/:id', eliminarTarea);
+router.get('/obtener-tarea/:idTarea', auth, obtenerTarea)
+router.post('/:id', auth, agregarTarea);
+router.put('/:id', auth, modificarTarea);
+router.put('/completar/:id', auth, completarTarea);
+router.delete('/:id', auth, eliminarTarea);
 
 export default router;

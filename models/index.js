@@ -21,7 +21,7 @@ Sedes.hasMany(Actividades);
 Miembros.belongsTo(Sedes);
 Actividades.belongsTo(Sedes);
 ListaTarea.belongsTo(Proyectos);
-
+Proyectos.belongsTo(Usuario);
 // un usuario tiene muchas tareas 
 ListaTarea.belongsTo(Usuario);
 

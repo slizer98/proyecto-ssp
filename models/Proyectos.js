@@ -12,6 +12,10 @@ const Proyectos = db.define('proyectos', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    descripcion: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     personal: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -22,7 +26,11 @@ const Proyectos = db.define('proyectos', {
     responsable: {  
         type: DataTypes.STRING,
         allowNull: false,
-    }
+    },
+    estado : {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
 });
 
 export default Proyectos;
