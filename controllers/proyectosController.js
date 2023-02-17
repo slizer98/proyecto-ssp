@@ -17,13 +17,25 @@ const obtenerProyectos = async (req, res) => {
 // mostrar proyectos de un usuario
 const obtenerProyectosUsuario = async (req, res) => {
     try {
+        console.log(req.query);
         const proyectos = await Proyectos.findAll({
             where: {
-                idProyectista: req.params.id
+                usuarioId: req.params.id
             }
         });
+
         if(proyectos.length === 0) {
             return res.status(200).json({ok:false, msg: 'No hay proyectos' });
+        }
+        if(req.query.validado == 'true') {
+            // retornar solo los proyectos validados
+            const proyectosValidados = proyectos.filter(proyecto => proyecto.estado == 1);
+            return res.json({ok: 'validado', proyectosValidados});
+        }
+        if(req.query.validado == 'false') {
+            // retornar solo los proyectos no validados
+            const proyectosNoValidados = proyectos.filter(proyecto => proyecto.estado == 0);
+            return res.json({ok:'noValidado', proyectosNoValidados});
         }
         res.json({ok:true, proyectos});
     } catch (error) {
