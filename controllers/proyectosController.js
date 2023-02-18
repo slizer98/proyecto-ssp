@@ -18,25 +18,26 @@ const obtenerProyectos = async (req, res) => {
 const obtenerProyectosUsuario = async (req, res) => {
     try {
         console.log(req.query);
-        const proyectos = await Proyectos.findAll({
+        const todosProyectos = await Proyectos.findAll({
             where: {
                 usuarioId: req.params.id
             }
         });
 
-        if(proyectos.length === 0) {
+        if(todosProyectos.length === 0) {
             return res.status(200).json({ok:false, msg: 'No hay proyectos' });
         }
         if(req.query.validado == 'true') {
             // retornar solo los proyectos validados
-            const proyectosValidados = proyectos.filter(proyecto => proyecto.estado == 1);
-            return res.json({ok: 'validado', proyectosValidados});
+            const proyectos = todosProyectos.filter(proyecto => proyecto.estado == 1);
+            return res.json({ok: 'validado', proyectos});
         }
         if(req.query.validado == 'false') {
             // retornar solo los proyectos no validados
-            const proyectosNoValidados = proyectos.filter(proyecto => proyecto.estado == 0);
-            return res.json({ok:'noValidado', proyectosNoValidados});
+            const proyectos = todosProyectos.filter(proyecto => proyecto.estado == 0);
+            return res.json({ok:'noValidado', proyectos});
         }
+        const proyectos = todosProyectos;
         res.json({ok:true, proyectos});
     } catch (error) {
         console.log(error);
