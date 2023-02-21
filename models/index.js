@@ -17,14 +17,13 @@ import Proyectos from './Proyectos.js';
 Capitulos.hasMany(Sedes);
 Sedes.belongsTo(Capitulos);
 Sedes.hasMany(Miembros);
-Sedes.hasMany(Actividades);
 Miembros.belongsTo(Sedes);
-Actividades.belongsTo(Sedes);
-ListaTarea.belongsTo(Proyectos);
 Proyectos.belongsTo(Usuario);
-// un usuario tiene muchas tareas 
-ListaTarea.belongsTo(Usuario);
+Actividades.belongsTo(Proyectos);
 
+// un usuario tiene muchas tareas 
+
+ListaTarea.belongsTo(Usuario);
 
 Mensaje.belongsTo(Usuario);
 

@@ -6,6 +6,7 @@ import listaDeTareasRouter from './routes/listaDeTareasRouter.js';
 import homePage from './routes/homePageRouter.js'
 import capitulos from './routes/capitulosRouter.js';
 import proyectos from './routes/proyectosRouter.js';
+import actividades from './routes/actividadesRouter.js';
 import db from './config/db.js'; 
 
 const app = express();
@@ -31,6 +32,7 @@ app.use('/tareas', listaDeTareasRouter);
 app.use('/', homePage);
 app.use('/capitulos', capitulos);
 app.use('/proyectos', proyectos);
+app.use('/actividades', actividades);
 
 
 // ruta para rutas que no existen

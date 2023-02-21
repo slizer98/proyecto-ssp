@@ -14,6 +14,28 @@ const obtenerProyectos = async (req, res) => {
     }
 } 
 
+// obtener los 5 proyectos mas recientes para la pagina de inicio 
+const obtenerProyectosRecientes = async (req, res) => {
+    try {
+        const proyectos = await Proyectos.findAll({
+            where: {
+                estado: 1
+            },
+            limit: 5,
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        });
+        if(proyectos.length === 0) {
+            return res.status(200).json({ok: false, msg: 'No hay proyectos recientes' });
+        }
+        res.json({ok: true, proyectos});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ok:false, msg:'Hubo un error al obtener los proyectos'});
+    }
+}
+
 // mostrar proyectos de un usuario
 const obtenerProyectosUsuario = async (req, res) => {
     try {
@@ -118,5 +140,6 @@ export {
     obtenerProyectosUsuario,
     crearProyecto,
     actualizarProyecto,
-    eliminarProyecto
+    eliminarProyecto,
+    obtenerProyectosRecientes
 };
