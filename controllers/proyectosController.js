@@ -1,13 +1,19 @@
-import {Proyectos} from '../models/index.js';
+import {Proyectos, Actividades} from '../models/index.js';
 import { check, validationResult } from 'express-validator';
 
 const obtenerProyectos = async (req, res) => {
     try {
-        const proyectos = await Proyectos.findAll();
-        if(proyectos.length === 0) {
-            return res.status(200).json({ msg: 'No hay proyectos' });
-        }
-        res.json(proyectos);
+        // obtener proyectos de un usuario e incluir las actividades
+        const proyectos = await Proyectos.findAll({
+            where: {
+                usuarioId: req.params.id
+            },
+            include: [
+                { model: Actividades, as: 'actividades' }
+            ]
+
+        });
+
     } catch (error) {
         console.log(error);
         res.status(500).json({ok:false, msg:'Hubo un error al obtener los proyectos'});
@@ -52,11 +58,17 @@ const obtenerProyectosUsuario = async (req, res) => {
         if(req.query.validado == 'true') {
             // retornar solo los proyectos validados
             const proyectos = todosProyectos.filter(proyecto => proyecto.estado == 1);
+            if(proyectos.length === 0) {
+                return res.status(200).json({ok: false, msg: 'No hay proyectos validados' });
+            }
             return res.json({ok: 'validado', proyectos});
         }
         if(req.query.validado == 'false') {
             // retornar solo los proyectos no validados
             const proyectos = todosProyectos.filter(proyecto => proyecto.estado == 0);
+            if(proyectos.length === 0) {
+                return res.status(200).json({ok: false, msg: 'No hay proyectos no validados' });
+            }
             return res.json({ok:'noValidado', proyectos});
         }
         const proyectos = todosProyectos;
@@ -76,7 +88,7 @@ const crearProyecto = async (req, res) => {
         await check('responsable', 'El responsable del proyecto es obligatorio').notEmpty().run(req);
         const errores = validationResult(req);
         if(!errores.isEmpty()) {
-            return res.status(400).json({ok: "errores", errors: errores.array()});
+            return res.status(200).json({ok: "errores", errors: errores.array()});
         }
         const proyecto = await Proyectos.create({
             nombre: req.body.nombre,

@@ -11,11 +11,24 @@ const obtenerActividades = async (req, res) => {
         const actividadesTotales = actividades.length;
         const actividadesCompletadas = actividades.filter(actividad => actividad.estado === true).length;
         const porcentaje = Math.round((actividadesCompletadas / actividadesTotales) * 100);
-
         res.status(200).json({ok: true, actividades, porcentaje });
     } catch (error) {
         console.log(error);
         res.status(500).json({ok: false, msg: 'Error inesperado al obtener actividades'});
+    }
+}
+
+const obtenerActividad = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const actividad = await Actividades.findOne({where: {id}});
+        if(!actividad) {
+            return res.status(404).json({ok: false, msg: 'Actividad no encontrada'});
+        }
+        res.status(200).json({ok: true, actividad});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ok: false, msg: 'Error inesperado al obtener actividad'});
     }
 }
 
@@ -65,6 +78,7 @@ const completarActividad = async (req, res) => {
 
 export {
     obtenerActividades,
+    obtenerActividad,
     crearActividad,
     completarActividad
 }
