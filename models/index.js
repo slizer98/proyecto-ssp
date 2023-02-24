@@ -20,6 +20,7 @@ Sedes.hasMany(Miembros);
 Miembros.belongsTo(Sedes);
 Proyectos.belongsTo(Usuario);
 Actividades.belongsTo(Proyectos);
+Proyectos.hasMany(Actividades, {foreignKey: 'proyectoId'});
 
 // un usuario tiene muchas tareas 
 

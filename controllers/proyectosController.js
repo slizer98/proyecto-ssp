@@ -3,16 +3,19 @@ import { check, validationResult } from 'express-validator';
 
 const obtenerProyectos = async (req, res) => {
     try {
-        // obtener proyectos de un usuario e incluir las actividades
-        const proyectos = await Proyectos.findAll({
-            where: {
-                usuarioId: req.params.id
-            },
+        const { id } = req.params;
+        const proyectos = await Proyectos.findByPk(id, {
             include: [
-                { model: Actividades, as: 'actividades' }
+                {
+                    model: Actividades, as: 'actividades'
+                }
             ]
 
         });
+        if(!proyectos) {
+            return res.status(404).json({ok:false, msg: 'No hay proyectos' });
+        }
+        res.json({ok:true, proyectos});
 
     } catch (error) {
         console.log(error);
@@ -45,11 +48,16 @@ const obtenerProyectosRecientes = async (req, res) => {
 // mostrar proyectos de un usuario
 const obtenerProyectosUsuario = async (req, res) => {
     try {
-        console.log(req.query);
-        const todosProyectos = await Proyectos.findAll({
+        const { id } = req.params;
+        const todosProyectos = await Proyectos.findAll( {
             where: {
-                usuarioId: req.params.id
-            }
+                usuarioId: id
+            },
+            include: [
+                {
+                    model: Actividades, as: 'actividades'
+                }
+            ]
         });
 
         if(todosProyectos.length === 0) {
@@ -71,6 +79,7 @@ const obtenerProyectosUsuario = async (req, res) => {
             }
             return res.json({ok:'noValidado', proyectos});
         }
+        console.log(todosProyectos.proyectos);
         const proyectos = todosProyectos;
         res.json({ok:true, proyectos});
     } catch (error) {

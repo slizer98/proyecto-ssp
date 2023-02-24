@@ -1,4 +1,4 @@
-import Actividades from '../models/Actividades.js';
+import {Actividades, Proyectos} from '../models/index.js';
 import { check, validationResult } from 'express-validator';
 
 const obtenerActividades = async (req, res) => {
@@ -8,6 +8,7 @@ const obtenerActividades = async (req, res) => {
         if(actividades.length === 0) {
             return res.status(200).json({ok: false, msg: 'No hay actividades' });
         }
+        console.log(actividades);
         const actividadesTotales = actividades.length;
         const actividadesCompletadas = actividades.filter(actividad => actividad.estado === true).length;
         const porcentaje = Math.round((actividadesCompletadas / actividadesTotales) * 100);
@@ -44,13 +45,18 @@ const crearActividad = async (req, res) => {
         if(!errores.isEmpty()) {
             return res.status(400).json({ok: 'errores', errors: errores.array() });
         }
+        const proyecto = await Proyectos.findOne({where: {id}});
+        if(!proyecto) {
+            return res.status(404).json({ok: false, msg: 'Proyecto no encontrado'});
+        }
+
         const nuevaActividad = await Actividades.create({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
             fecha: req.body.fecha,
             sede: req.body.sede,
             nombreMiembro: req.body.nombreMiembro,
-            proyectoId: id
+            proyectoId: proyecto.id
         })  
         res.status(200).json({ok: true, nuevaActividad });
     } catch (error) {
