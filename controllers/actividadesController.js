@@ -8,11 +8,7 @@ const obtenerActividades = async (req, res) => {
         if(actividades.length === 0) {
             return res.status(200).json({ok: false, msg: 'No hay actividades' });
         }
-        console.log(actividades);
-        const actividadesTotales = actividades.length;
-        const actividadesCompletadas = actividades.filter(actividad => actividad.estado === true).length;
-        const porcentaje = Math.round((actividadesCompletadas / actividadesTotales) * 100);
-        res.status(200).json({ok: true, actividades, porcentaje });
+        res.status(200).json({ok: true, actividades });
     } catch (error) {
         console.log(error);
         res.status(500).json({ok: false, msg: 'Error inesperado al obtener actividades'});
