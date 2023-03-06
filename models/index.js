@@ -7,6 +7,8 @@ import Usuario from './Usuario.js';
 import Mensaje from './Mensaje.js';
 import ListaTarea from './ListaTarea.js';
 import Proyectos from './Proyectos.js';
+import Asistencia from './Asistencia.js';
+import Evento from './Evento.js';
 
 // creamos las relaciones entre los modelos
 // Capitulo tiene muchas Sedes
@@ -21,12 +23,13 @@ Miembros.belongsTo(Sedes);
 Proyectos.belongsTo(Usuario);
 Actividades.belongsTo(Proyectos);
 Proyectos.hasMany(Actividades, {foreignKey: 'proyectoId'});
-
-// un usuario tiene muchas tareas 
-
 ListaTarea.belongsTo(Usuario);
-
 Mensaje.belongsTo(Usuario);
+
+Usuario.hasMany(Asistencia);
+Evento.hasMany(Asistencia);
+Asistencia.belongsTo(Usuario);
+Asistencia.belongsTo(Evento);
 
 export {
     Capitulos, 

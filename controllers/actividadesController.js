@@ -46,7 +46,7 @@ const crearActividad = async (req, res) => {
             return res.status(404).json({ok: false, msg: 'Proyecto no encontrado'});
         }
 
-        const nuevaActividad = await Actividades.create({
+        await Actividades.create({
             nombre: req.body.nombre,
             descripcion: req.body.descripcion,
             fecha: req.body.fecha,
@@ -54,7 +54,7 @@ const crearActividad = async (req, res) => {
             nombreMiembro: req.body.nombreMiembro,
             proyectoId: proyecto.id
         })  
-        res.status(200).json({ok: true, nuevaActividad });
+        res.status(200).json({ok: true, msg:'Actividad creada correctamente' });
     } catch (error) {
         console.log(error);
         res.status(500).json({ok: false, msg: 'Error inesperado al crear actividad'});
