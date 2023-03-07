@@ -5,6 +5,7 @@ import usuarioRoutes from './routes/usuarioRouter.js';
 import listaDeTareasRouter from './routes/listaDeTareasRouter.js';
 import homePage from './routes/homePageRouter.js'
 import capitulos from './routes/capitulosRouter.js';
+import eventos from './routes/eventosRouter.js';
 import proyectos from './routes/proyectosRouter.js';
 import actividades from './routes/actividadesRouter.js';
 import swaggerJSDoc from 'swagger-jsdoc';
@@ -63,6 +64,7 @@ app.use('/tareas', listaDeTareasRouter);
 app.use('/', homePage);
 app.use('/capitulos', capitulos);
 app.use('/proyectos', proyectos);
+app.use('/eventos', eventos);
 app.use('/actividades', actividades);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 

@@ -7,7 +7,7 @@ const Evento = db.define('eventos', {
         allowNull: false,
     },
     fecha: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     hora: {
@@ -23,10 +23,6 @@ const Evento = db.define('eventos', {
         allowNull: false,
     },
     lugar: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    tipo: {
         type: DataTypes.STRING,
         allowNull: false,
     },

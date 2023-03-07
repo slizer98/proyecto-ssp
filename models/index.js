@@ -38,5 +38,8 @@ export {
     Actividades, 
     Usuario, 
     Mensaje, 
-    Proyectos
+    Proyectos,
+    ListaTarea,
+    Asistencia,
+    Evento
 };
