@@ -28,8 +28,12 @@ const Evento = db.define('eventos', {
     },
     estado: {
         type: DataTypes.STRING,
+        defaultValue: 'Activo',
     },
     responsable: {
+        type: DataTypes.STRING,
+    },
+    background: {
         type: DataTypes.STRING,
     },
 });
