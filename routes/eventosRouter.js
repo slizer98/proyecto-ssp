@@ -1,6 +1,7 @@
 import express from 'express';
 import { 
     obetenerEventos, 
+    obetenerEvento,
     crearEvento, 
     actualizarEvento, 
     eliminarEvento 
@@ -9,7 +10,8 @@ import {
 const router = express.Router();
 
 router.get('/', obetenerEventos);
-router.post('/', crearEvento)
+router.get('/:id', obetenerEvento);
+router.post('/:id', crearEvento)
 router.put('/:id', actualizarEvento);
 router.delete('/:id', eliminarEvento);
 

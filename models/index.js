@@ -27,6 +27,8 @@ ListaTarea.belongsTo(Usuario);
 Mensaje.belongsTo(Usuario);
 
 Usuario.hasMany(Asistencia);
+
+Usuario.hasMany(Evento);
 Evento.hasMany(Asistencia);
 Asistencia.belongsTo(Usuario);
 Asistencia.belongsTo(Evento);

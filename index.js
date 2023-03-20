@@ -8,6 +8,7 @@ import capitulos from './routes/capitulosRouter.js';
 import eventos from './routes/eventosRouter.js';
 import proyectos from './routes/proyectosRouter.js';
 import actividades from './routes/actividadesRouter.js';
+import asistencias from './routes/asistenciasRouter.js';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 import db from './config/db.js'; 
@@ -66,6 +67,7 @@ app.use('/capitulos', capitulos);
 app.use('/proyectos', proyectos);
 app.use('/eventos', eventos);
 app.use('/actividades', actividades);
+app.use('/asistencia', asistencias)
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 
